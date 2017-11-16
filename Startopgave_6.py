@@ -1,6 +1,6 @@
 # Naam: Cas van Rijbroek
 # Datum: 26-10-2017
-# Versie: 1.5.0
+# Versie: 1.5.1
 
 def main():
     sentinel = False
