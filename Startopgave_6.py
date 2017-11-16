@@ -1,10 +1,22 @@
 # Naam: Cas van Rijbroek
 # Datum: 26-10-2017
-# Versie: 1.4.2
+# Versie: 1.5.0
 
 def main():
-    bestand = "test.fa" # Voer hier de bestandsnaam van het juiste bestand in, of hernoem je bestand
-    headers, seqs = lees_inhoud(bestand)
+    sentinel = False
+    while sentinel is False:
+        try:
+            bestand = input("geef de bestandsnaam: ")  # Voer hier de bestandsnaam van het juiste bestand in, of hernoem je bestand
+            headers, seqs = lees_inhoud(bestand)
+            sentinel = True
+        except FileNotFoundError:
+            print("het bestand is niet gevonden, zet het bestand in de map en probeer het opnieuw")
+        except IOError:
+            print("er is iets misgegaan bij het lezen van het bestand, controleer of het bestand nog volledig aanwezig is en probeer het opnieuw")
+        except:
+            print("er is een onbekende fout opgetreden, neem contact op met de systeembeheerder")
+        
+
 
     x = 0
     seq = ""
@@ -63,5 +75,9 @@ def knipt(seq):
         if x[1] in seq:
             print("match met", x[0], "op positie", seq.index(x[1]))
             cor_enzymen.append(x[0])
+try:    
+    main()
+except KeyboardInterrupt:
+    print()
+    print("u heeft het programma onderbroken")
     
-main()
