@@ -11,6 +11,8 @@ def main():
             sentinel = True
         except FileNotFoundError:
             print("het bestand is niet gevonden, zet het bestand in de map en probeer het opnieuw")
+        except PermissionError:
+            print("u heeft niet de juiste rechten om dit bestand in te lezen, verkrijg deze rechten of probeer een ander bestand")
         except IOError:
             print("er is iets misgegaan bij het lezen van het bestand, controleer of het bestand nog volledig aanwezig is en probeer het opnieuw")
         except:
