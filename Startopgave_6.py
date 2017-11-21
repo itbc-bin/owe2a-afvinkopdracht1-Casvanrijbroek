@@ -13,24 +13,26 @@ def main():
             print("het bestand is niet gevonden, zet het bestand in de map en probeer het opnieuw")
         except PermissionError:
             print("u heeft niet de juiste rechten om dit bestand in te lezen, verkrijg deze rechten of probeer een ander bestand")
-        except IOError:
-            print("er is iets misgegaan bij het lezen van het bestand, controleer of het bestand nog volledig aanwezig is en probeer het opnieuw")
-        except:
-            print("er is een onbekende fout opgetreden, neem contact op met de systeembeheerder")
         
-
-
-    x = 0
-    seq = ""
-    zoekwoord = input("Geef een zoekwoord op: ")
-    for line in headers:
-        if zoekwoord in line:
-            seq += seqs[x]
-            print(line)
-            print(seq)
-            is_dna(seq)
-            knipt(seq)
-        x += 1
+    zoekwoord_check = False
+    while zoekwoord_check == False:
+        try:
+            x = 0
+            seq = ""
+            zoekwoord = input("Geef een zoekwoord op: ")
+            for line in headers:
+                if zoekwoord in line:
+                    zoekwoord_check = True
+                    seq += seqs[x]
+                    print(line)
+                    print(seq)
+                    is_dna(seq)
+                    knipt(seq)
+                x += 1
+            if zoekwoord_check == False:
+                raise SyntaxError
+        except SyntaxError:
+            print("het gegeven zoekwoord komt niet in het bestand voor, probeer een ander woord")
     
 def lees_inhoud(bestands_naam):
     bestand = open(bestands_naam, "r")
@@ -54,14 +56,20 @@ def lees_inhoud(bestands_naam):
 
     
 def is_dna(seq):
-    dna1 = False
-    a = seq.count("A")
-    c = seq.count("C")
-    t = seq.count("T")
-    g = seq.count("G")
-    totaal = a + c + t + g
-    if len(seq) == totaal:
-        dna1 = True
+    try:
+        dna1 = False
+        a = seq.count("A")
+        c = seq.count("C")
+        t = seq.count("T")
+        g = seq.count("G")
+        totaal = a + c + t + g
+        if len(seq) == totaal:
+            dna1 = True
+        if dna1 == False:
+            raise SyntaxError
+    except SyntaxError:
+        print("het gegeven bestand bestaat niet uit headers en sequenties met alleen ATCG, controleer de lay out van het bestand")        
+        raise SystemExit
     print(dna1)
     
 def knipt(seq):
